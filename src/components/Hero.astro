@@ -11,19 +11,27 @@ const badges = [
   { label: VERSION, icon: 'spark' }
 ];
 
-const messages = [
+interface Message {
+  from: 'bot' | 'user';
+  body: string;
+  title?: string;
+  meta?: string;
+  options?: string[];
+}
+
+const messages: Message[] = [
   {
-    from: 'bot' as const,
+    from: 'bot',
     title: '✅ Tarea completada',
     body: 'opencode · agentower — refactor del módulo de auth. 4 archivos cambiados.',
     meta: 'hace 2 min'
   },
   {
-    from: 'user' as const,
+    from: 'user',
     body: 'usa un middleware en vez de duplicar el check en cada handler'
   },
   {
-    from: 'bot' as const,
+    from: 'bot',
     title: '❓ El agente pregunta',
     body: '¿Qué estrategia de caché prefieres para las sesiones?',
     meta: 'hace 1 min',
