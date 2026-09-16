@@ -8,7 +8,6 @@ const base = BASE;
 <section id="agentes" class="relative py-20 sm:py-28">
   <div class="container-page">
     <SectionHeading
-      eyebrow="Compatible con"
       title="Un bot, todos tus agentes"
       description="Agentower detecta los CLIs instalados en tu PATH (y en los bundles de app) y sigue sus sesiones sin que tengas que elegir nada. Podés cambiar de agente por chat cuando quieras."
     />
@@ -17,7 +16,7 @@ const base = BASE;
       {AGENTS.map((agent) => (
         <li class="card card-hover p-6">
           <div class="flex items-center gap-3.5">
-            <span class="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-ink-700/80 bg-ink-800 p-2.5">
+            <span class="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-ink-800 p-2.5">
               <img
                 src={`${base}agents/${agent.logo}`}
                 alt={`Logo de ${agent.name}`}
@@ -30,13 +29,13 @@ const base = BASE;
             </span>
             <div>
               <h3 class="text-[0.98rem] font-semibold">{agent.name}</h3>
-              <span class="font-mono text-[0.68rem] uppercase tracking-wider text-ink-500">{agent.transport}</span>
+              <span class="font-mono text-[0.72rem] uppercase tracking-wider text-ink-400">{agent.transport}</span>
             </div>
           </div>
           <p class="mt-4 text-sm leading-relaxed text-ink-300">{agent.note}</p>
-          <code class="mt-4 block truncate rounded-lg border border-ink-700/70 bg-[#06080c] px-3 py-2 font-mono text-[0.75rem] text-ink-400">
+          <p class="mt-4 truncate border-t border-ink-700/50 pt-3 font-mono text-[0.75rem] text-ink-400">
             $ {agent.cli}
-          </code>
+          </p>
         </li>
       ))}
     </ul>

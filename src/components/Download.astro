@@ -30,7 +30,6 @@ const builds = [
 <section id="descarga" class="relative py-20 sm:py-28">
   <div class="container-page">
     <SectionHeading
-      eyebrow="Descarga"
       title="Bajá Agentower"
       description={`Binarios del último release (${VERSION}). Es gratis y open source bajo licencia MIT.`}
     />
@@ -57,7 +56,7 @@ const builds = [
                 </svg>
               )}
             </span>
-            <span class="rounded-md border border-ink-700/80 bg-ink-850 px-2 py-1 font-mono text-[0.68rem] text-ink-400">{build.size}</span>
+            <span class="rounded-md border border-ink-700/80 bg-ink-850 px-2 py-1 font-mono text-[0.72rem] text-ink-400">{build.size}</span>
           </div>
 
           <h3 class="mt-5 text-xl font-bold">{build.name}</h3>
@@ -80,7 +79,7 @@ const builds = [
 
     <div class="mx-auto mt-8 flex max-w-4xl flex-col items-center gap-3 text-center sm:flex-row sm:justify-between sm:text-left">
       <p class="text-sm text-ink-400">
-        ¿Preferís compilarlo vos? El binario Go también corre en Linux.
+        ¿Preferís compilarlo vos? Podés construir el binario Go desde el código.
       </p>
       <div class="flex flex-wrap justify-center gap-2">
         <a href="#instalacion" class="btn btn-ghost px-3.5 py-2 text-xs">Ver guía del binario</a>
@@ -92,7 +91,7 @@ const builds = [
     </div>
 
     <p class="mx-auto mt-6 max-w-4xl text-center text-xs leading-relaxed text-ink-500">
-      Los binarios los publica GitHub en cada release de
+      Los binarios los publica GitHub en cada release de{' '}
       <a href={REPO} target="_blank" rel="noopener noreferrer" class="text-ink-400 underline decoration-dotted underline-offset-4 hover:text-white">gregoryoviedo/agentower</a>.
       Verificá siempre la URL del release antes de ejecutar un archivo descargado.
     </p>
@@ -116,7 +115,7 @@ const builds = [
       if (el.dataset.osCard === detected) {
         el.style.borderColor = 'color-mix(in oklab, var(--color-brand-500) 45%, transparent)';
         const tag = document.createElement('span');
-        tag.className = 'absolute right-5 top-5 rounded-md border border-brand-500/30 bg-brand-500/10 px-2 py-0.5 font-mono text-[0.62rem] uppercase tracking-wider text-brand-400';
+        tag.className = 'absolute right-5 top-5 rounded-md border border-brand-500/30 bg-brand-500/10 px-2 py-0.5 font-mono text-[0.72rem] uppercase tracking-wider text-brand-400';
         tag.textContent = 'recomendado';
         el.appendChild(tag);
       }

@@ -1,7 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-sans: "Instrument Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", "Menlo", monospace;
 
   --color-ink-950: #08090c;
@@ -10,18 +11,15 @@
   --color-ink-800: #181c24;
   --color-ink-700: #232833;
   --color-ink-600: #333a48;
-  --color-ink-500: #4b5464;
-  --color-ink-400: #6b7484;
+  --color-ink-500: #828c9c;
+  --color-ink-400: #8b95a5;
   --color-ink-300: #9aa3b2;
   --color-ink-200: #c6ccd6;
   --color-ink-100: #e8ebf0;
 
-  --color-brand-400: #6ee7f0;
-  --color-brand-500: #22d3ee;
-  --color-brand-600: #0ea5b7;
-  --color-accent-400: #a78bfa;
-  --color-accent-500: #8b5cf6;
-  --color-accent-600: #7c3aed;
+  --color-brand-400: #f7c15c;
+  --color-brand-500: #f0a92e;
+  --color-brand-600: #d18a12;
 
   --radius-4xl: 2rem;
 }
@@ -44,13 +42,14 @@
     text-rendering: optimizeLegibility;
   }
 
-  ::selection {
-    background: color-mix(in oklab, var(--color-brand-500) 35%, transparent);
-    color: #fff;
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
   }
 
-  h1, h2, h3 {
-    letter-spacing: -0.02em;
+  ::selection {
+    background: color-mix(in oklab, var(--color-brand-500) 40%, transparent);
+    color: #06090d;
   }
 }
 
@@ -60,17 +59,6 @@
     max-width: 76rem;
     margin-inline: auto;
     padding-inline: 1.25rem;
-  }
-
-  .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--color-brand-400);
   }
 
   .card {
@@ -87,9 +75,9 @@
   }
 
   .card-hover:hover {
-    border-color: color-mix(in oklab, var(--color-brand-500) 45%, transparent);
+    border-color: color-mix(in oklab, var(--color-ink-500) 55%, transparent);
     transform: translateY(-2px);
-    box-shadow: 0 18px 40px -24px color-mix(in oklab, var(--color-brand-500) 60%, transparent);
+    box-shadow: 0 18px 38px -26px rgb(0 0 0 / 0.85);
   }
 
   .btn {
@@ -107,13 +95,13 @@
   }
 
   .btn-primary {
-    background: linear-gradient(135deg, var(--color-brand-500), var(--color-accent-500));
+    background: var(--color-brand-500);
     color: #06090d;
-    box-shadow: 0 14px 34px -18px color-mix(in oklab, var(--color-brand-500) 85%, transparent);
+    box-shadow: 0 10px 24px -14px rgb(0 0 0 / 0.85), 0 1px 0 0 rgb(255 255 255 / 0.3) inset;
   }
 
   .btn-primary:hover {
-    filter: brightness(1.08);
+    background: var(--color-brand-400);
     transform: translateY(-1px);
   }
 
@@ -124,7 +112,7 @@
   }
 
   .btn-ghost:hover {
-    border-color: color-mix(in oklab, var(--color-brand-500) 50%, transparent);
+    border-color: color-mix(in oklab, var(--color-ink-500) 70%, transparent);
     background: color-mix(in oklab, var(--color-ink-800) 85%, transparent);
   }
 
@@ -140,8 +128,7 @@
 
   .grid-glow {
     background-image:
-      radial-gradient(60rem 32rem at 50% -12%, color-mix(in oklab, var(--color-accent-500) 20%, transparent), transparent 70%),
-      radial-gradient(42rem 26rem at 88% 8%, color-mix(in oklab, var(--color-brand-500) 14%, transparent), transparent 70%);
+      radial-gradient(60rem 32rem at 50% -12%, color-mix(in oklab, var(--color-brand-500) 12%, transparent), transparent 70%);
   }
 
   .hairline-grid {
@@ -154,13 +141,6 @@
 }
 
 @layer utilities {
-  .text-gradient {
-    background: linear-gradient(120deg, #ffffff 12%, var(--color-brand-400) 58%, var(--color-accent-400));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
   .animate-float {
     animation: float 7s ease-in-out infinite;
   }
@@ -169,4 +149,19 @@
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-8px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-float {
+    animation: none;
+  }
+
+  .animate-ping {
+    animation: none;
+    opacity: 0.65;
+  }
 }
