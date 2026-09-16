@@ -1,1 +1,172 @@
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", "Menlo", monospace;
+
+  --color-ink-950: #08090c;
+  --color-ink-900: #0d0f14;
+  --color-ink-850: #12151b;
+  --color-ink-800: #181c24;
+  --color-ink-700: #232833;
+  --color-ink-600: #333a48;
+  --color-ink-500: #4b5464;
+  --color-ink-400: #6b7484;
+  --color-ink-300: #9aa3b2;
+  --color-ink-200: #c6ccd6;
+  --color-ink-100: #e8ebf0;
+
+  --color-brand-400: #6ee7f0;
+  --color-brand-500: #22d3ee;
+  --color-brand-600: #0ea5b7;
+  --color-accent-400: #a78bfa;
+  --color-accent-500: #8b5cf6;
+  --color-accent-600: #7c3aed;
+
+  --radius-4xl: 2rem;
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+  }
+
+  body {
+    background-color: var(--color-ink-950);
+    color: var(--color-ink-100);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-brand-500) 35%, transparent);
+    color: #fff;
+  }
+
+  h1, h2, h3 {
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer components {
+  .container-page {
+    width: 100%;
+    max-width: 76rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-brand-400);
+  }
+
+  .card {
+    position: relative;
+    border-radius: var(--radius-4xl);
+    border: 1px solid color-mix(in oklab, var(--color-ink-700) 80%, transparent);
+    background:
+      linear-gradient(180deg, color-mix(in oklab, var(--color-ink-850) 92%, transparent), color-mix(in oklab, var(--color-ink-900) 96%, transparent));
+    box-shadow: 0 1px 0 0 color-mix(in oklab, #fff 4%, transparent) inset;
+  }
+
+  .card-hover {
+    transition: border-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+  }
+
+  .card-hover:hover {
+    border-color: color-mix(in oklab, var(--color-brand-500) 45%, transparent);
+    transform: translateY(-2px);
+    box-shadow: 0 18px 40px -24px color-mix(in oklab, var(--color-brand-500) 60%, transparent);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 0.85rem;
+    padding: 0.75rem 1.35rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1;
+    transition: all 180ms ease;
+    white-space: nowrap;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--color-brand-500), var(--color-accent-500));
+    color: #06090d;
+    box-shadow: 0 14px 34px -18px color-mix(in oklab, var(--color-brand-500) 85%, transparent);
+  }
+
+  .btn-primary:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+  }
+
+  .btn-ghost {
+    border: 1px solid color-mix(in oklab, var(--color-ink-600) 85%, transparent);
+    background: color-mix(in oklab, var(--color-ink-850) 70%, transparent);
+    color: var(--color-ink-100);
+  }
+
+  .btn-ghost:hover {
+    border-color: color-mix(in oklab, var(--color-brand-500) 50%, transparent);
+    background: color-mix(in oklab, var(--color-ink-800) 85%, transparent);
+  }
+
+  .code-block {
+    border-radius: 1rem;
+    border: 1px solid color-mix(in oklab, var(--color-ink-700) 85%, transparent);
+    background: #06080c;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    line-height: 1.7;
+    overflow-x: auto;
+  }
+
+  .grid-glow {
+    background-image:
+      radial-gradient(60rem 32rem at 50% -12%, color-mix(in oklab, var(--color-accent-500) 20%, transparent), transparent 70%),
+      radial-gradient(42rem 26rem at 88% 8%, color-mix(in oklab, var(--color-brand-500) 14%, transparent), transparent 70%);
+  }
+
+  .hairline-grid {
+    background-image:
+      linear-gradient(to right, color-mix(in oklab, var(--color-ink-700) 55%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in oklab, var(--color-ink-700) 55%, transparent) 1px, transparent 1px);
+    background-size: 3.5rem 3.5rem;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 78%);
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(120deg, #ffffff 12%, var(--color-brand-400) 58%, var(--color-accent-400));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .animate-float {
+    animation: float 7s ease-in-out infinite;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}

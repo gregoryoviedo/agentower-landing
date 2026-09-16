@@ -1,0 +1,83 @@
+---
+import Icon from './Icon.astro';
+import SectionHeading from './SectionHeading.astro';
+
+const requirements = [
+  {
+    title: 'Un agente de IA instalado',
+    body: 'Al menos uno de los CLIs soportados, disponible en el PATH: opencode, claude, kiro, copilot, codex o agy.'
+  },
+  {
+    title: 'Token de Telegram',
+    body: 'Un bot propio creado con @BotFather. Es gratuito y el token se pega en Agentower, nunca en un servidor de terceros.'
+  },
+  {
+    title: 'Tu chat ID',
+    body: 'El ID numérico de tu usuario de Telegram, que te da @userinfobot. Es lo único que puede hablar con tu bot.'
+  },
+  {
+    title: 'macOS 13.0+ o Windows 10/11 x64',
+    body: 'Para las apps nativas. El binario Go también corre en Linux y en cualquier macOS/Windows reciente.'
+  },
+  {
+    title: 'Go 1.22+ (solo si compilás)',
+    body: 'Necesario únicamente si construís el binario remote-bot desde el código. Bajando un release ya viene embebido.'
+  },
+  {
+    title: '.NET 8 SDK (solo wrapper Windows)',
+    body: 'Solo se requiere para compilar Agentower.exe por tu cuenta. El .exe publicado es self-contained y no pide .NET.'
+  }
+];
+
+const vars = [
+  { key: 'WORKSPACE_ROOT', desc: 'Ruta absoluta que delimita toda la navegación del bot.' },
+  { key: 'TELEGRAM_BOT_TOKEN', desc: 'Token del bot que te da @BotFather.' },
+  { key: 'ALLOWED_CHAT_ID', desc: 'Tu ID numérico de usuario, obtenido con @userinfobot.' }
+];
+---
+
+<section id="requisitos" class="relative py-20 sm:py-28">
+  <div class="container-page">
+    <SectionHeading
+      eyebrow="Antes de empezar"
+      title="Requisitos previos"
+      description="Agentower no necesita servidores ni cuentas: solo una máquina, un bot de Telegram y al menos un agente de IA instalado."
+    />
+
+    <div class="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {requirements.map((item) => (
+        <div class="card flex gap-3.5 p-5">
+          <span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-brand-500/15 text-brand-400">
+            <Icon name="check" size={14} />
+          </span>
+          <div>
+            <h3 class="text-[0.94rem] font-semibold">{item.title}</h3>
+            <p class="mt-1.5 text-sm leading-relaxed text-ink-300">{item.body}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="card mt-10 overflow-hidden">
+      <div class="border-b border-ink-700/70 px-6 py-4">
+        <h3 class="flex items-center gap-2 text-sm font-semibold">
+          <Icon name="terminal" size={16} class="text-brand-400" />
+          Variables obligatorias
+        </h3>
+      </div>
+      <dl class="divide-y divide-ink-700/50">
+        {vars.map((v) => (
+          <div class="grid gap-1 px-6 py-4 sm:grid-cols-[minmax(0,15rem)_1fr] sm:items-center sm:gap-6">
+            <dt class="font-mono text-[0.8rem] font-medium text-brand-400">{v.key}</dt>
+            <dd class="text-sm leading-relaxed text-ink-300">{v.desc}</dd>
+          </div>
+        ))}
+      </dl>
+      <p class="border-t border-ink-700/70 bg-ink-850/60 px-6 py-4 text-xs leading-relaxed text-ink-400">
+        Las apps nativas escriben estas variables por vos en un <span class="font-mono">.env</span> con permisos
+        <span class="font-mono">0600</span> dentro de tu carpeta de usuario. Si preferís el binario, podés exportarlas en el shell
+        o apuntar <span class="font-mono">ENV_FILE</span> a tu propio archivo.
+      </p>
+    </div>
+  </div>
+</section>

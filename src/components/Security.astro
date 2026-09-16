@@ -1,0 +1,67 @@
+---
+import Icon from './Icon.astro';
+import { SECURITY } from '../data/site';
+
+const items = [
+  {
+    title: 'Solo tu chat puede hablarle',
+    body: 'El bot únicamente responde al ALLOWED_CHAT_ID configurado. Cualquier otro intento se descarta en silencio, sin llegar al handler.'
+  },
+  {
+    title: 'Callbacks con vida corta',
+    body: 'Los botones inline se validan contra un registro de navegación efímero por chat. Otros chats reciben “menú expirado”.'
+  },
+  {
+    title: 'Navegación contenida',
+    body: 'Toda ruta que llega desde Telegram es relativa: se resuelve, se evalúan los symlinks y el resultado debe quedar dentro del WORKSPACE_ROOT.'
+  },
+  {
+    title: 'Sin secretos en la base',
+    body: 'SQLite solo guarda proyecto, sesión y estado efímero. Nunca el contenido de tus prompts ni el token.'
+  },
+  {
+    title: 'Sin superficie pública',
+    body: 'No hay puertos abiertos, webhooks ni túneles. El long polling es saliente y los wrappers solo consultan un socket en 127.0.0.1.'
+  },
+  {
+    title: 'Credenciales locales',
+    body: 'El .env se escribe con permisos 0600 en macOS y vive bajo %APPDATA%\\Agentower\\ en Windows, accesible solo a tu cuenta.'
+  }
+];
+---
+
+<section class="relative py-20 sm:py-28">
+  <div class="container-page">
+    <div class="card overflow-hidden">
+      <div class="grid gap-px bg-ink-700/50 lg:grid-cols-[0.85fr_1.15fr]">
+        <div class="flex flex-col justify-between gap-8 bg-ink-850 p-8 sm:p-10">
+          <div>
+            <span class="grid h-12 w-12 place-items-center rounded-2xl border border-brand-500/25 bg-brand-500/10 text-brand-400">
+              <Icon name="shield" size={24} />
+            </span>
+            <h2 class="mt-6 text-3xl font-bold leading-tight sm:text-4xl">Seguridad por diseño</h2>
+            <p class="mt-4 text-base leading-relaxed text-ink-300">
+              Single-user y self-hosted: no hay backend compartido ni cuentas. Tu token, tus sesiones y tu código nunca salen de tu máquina salvo el mensaje que viaja a Telegram.
+            </p>
+          </div>
+          <a href={SECURITY} target="_blank" rel="noopener noreferrer" class="btn btn-ghost w-fit">
+            <Icon name="lock" size={17} />
+            Leer el modelo de seguridad
+          </a>
+        </div>
+
+        <ul class="grid gap-px bg-ink-700/50 sm:grid-cols-2">
+          {items.map((item) => (
+            <li class="bg-ink-900 p-6">
+              <div class="flex items-center gap-2.5">
+                <Icon name="check" size={15} class="text-brand-400" />
+                <h3 class="text-[0.94rem] font-semibold">{item.title}</h3>
+              </div>
+              <p class="mt-2 text-sm leading-relaxed text-ink-300">{item.body}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

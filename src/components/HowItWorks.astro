@@ -1,0 +1,106 @@
+---
+import Icon from './Icon.astro';
+import SectionHeading from './SectionHeading.astro';
+
+const steps = [
+  {
+    n: '01',
+    title: 'Creá el bot de Telegram',
+    body: 'Hablá con @BotFather para obtener el token y con @userinfobot para tu chat ID. Es gratis y toma un par de minutos.'
+  },
+  {
+    n: '02',
+    title: 'Instalá Agentower',
+    body: 'Bajá la app para macOS o Windows (o compilá el binario Go) y pegá WORKSPACE_ROOT, TELEGRAM_BOT_TOKEN y ALLOWED_CHAT_ID en Settings.'
+  },
+  {
+    n: '03',
+    title: 'Dejá que detecte tus agentes',
+    body: 'El bot escanea el PATH y los bundles de app, y empieza a seguir las sesiones de los CLIs que tengas instalados.'
+  },
+  {
+    n: '04',
+    title: 'Continuá desde el teléfono',
+    body: 'Cuando el agente termina o pregunta algo, recibís el aviso. Respondés y la tarea sigue en tu máquina.'
+  }
+];
+---
+
+<section class="relative py-20 sm:py-28">
+  <div class="container-page">
+    <SectionHeading
+      eyebrow="Cómo funciona"
+      title="De tu teléfono a tu máquina, sin túneles"
+      description="Todo el tráfico hacia Telegram es saliente (long polling). El bot no abre puertos a internet: las apps nativas hablan con él por un socket local en 127.0.0.1."
+    />
+
+    <div class="card mt-14 overflow-hidden">
+      <div class="grid items-stretch gap-px bg-ink-700/50 md:grid-cols-[1fr_auto_1.15fr_auto_1.15fr]">
+        <div class="flex flex-col items-center justify-center gap-3 bg-ink-900 px-6 py-8 text-center">
+          <span class="grid h-12 w-12 place-items-center rounded-2xl border border-brand-500/25 bg-brand-500/10 text-brand-400">
+            <Icon name="message" size={22} />
+          </span>
+          <p class="text-sm font-semibold">Tu teléfono</p>
+          <p class="font-mono text-[0.7rem] text-ink-500">Telegram</p>
+        </div>
+
+        <div class="flex flex-col items-center justify-center gap-1 bg-ink-900 px-2 py-6 text-center">
+          <Icon name="arrow" size={18} class="text-accent-400" />
+          <span class="font-mono text-[0.62rem] uppercase tracking-widest text-ink-500">long<br />polling</span>
+        </div>
+
+        <div class="bg-ink-850 px-6 py-8">
+          <div class="flex items-center gap-3">
+            <span class="grid h-11 w-11 place-items-center rounded-xl border border-ink-700/80 bg-ink-800 font-mono text-xs font-bold text-white">
+              rb
+            </span>
+            <div>
+              <p class="text-sm font-semibold">remote-bot</p>
+              <p class="font-mono text-[0.68rem] text-ink-500">Go · sin daemon</p>
+            </div>
+          </div>
+          <ul class="mt-5 space-y-2 text-[0.78rem] text-ink-300">
+            <li class="flex items-center gap-2"><Icon name="shield" size={14} class="text-brand-400" /> Whitelist por chat ID</li>
+            <li class="flex items-center gap-2"><Icon name="database" size={14} class="text-brand-400" /> Estado en SQLite</li>
+            <li class="flex items-center gap-2"><Icon name="radio" size={14} class="text-brand-400" /> Socket local <span class="font-mono">127.0.0.1</span></li>
+          </ul>
+        </div>
+
+        <div class="flex flex-col items-center justify-center gap-1 bg-ink-900 px-2 py-6 text-center">
+          <Icon name="arrow" size={18} class="text-accent-400" />
+          <span class="font-mono text-[0.62rem] uppercase tracking-widest text-ink-500">http<br />stdio acp</span>
+        </div>
+
+        <div class="bg-ink-900 px-6 py-8">
+          <div class="flex items-center gap-3">
+            <span class="grid h-11 w-11 place-items-center rounded-xl border border-accent-500/25 bg-accent-500/10 text-accent-400">
+              <Icon name="layers" size={20} />
+            </span>
+            <div>
+              <p class="text-sm font-semibold">Tus agentes</p>
+              <p class="font-mono text-[0.68rem] text-ink-500">locales · sin cambios</p>
+            </div>
+          </div>
+          <div class="mt-5 flex flex-wrap gap-1.5">
+            {['opencode', 'claude', 'kiro', 'copilot', 'codex', 'agy'].map((a) => (
+              <span class="rounded-md border border-ink-700/80 bg-ink-850 px-2 py-1 font-mono text-[0.68rem] text-ink-300">{a}</span>
+            ))}
+          </div>
+          <p class="mt-4 text-[0.78rem] leading-relaxed text-ink-400">
+            Las apps nativas de macOS y Windows cierran el círculo: toggle, settings y auto-arranque.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <ol class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {steps.map((step) => (
+        <li class="card p-6">
+          <span class="font-mono text-xs font-semibold text-accent-400">{step.n}</span>
+          <h3 class="mt-3 text-[0.98rem] font-semibold">{step.title}</h3>
+          <p class="mt-2.5 text-sm leading-relaxed text-ink-300">{step.body}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

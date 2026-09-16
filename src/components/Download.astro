@@ -1,0 +1,125 @@
+---
+import Icon from './Icon.astro';
+import SectionHeading from './SectionHeading.astro';
+import { DOWNLOADS, ALL_RELEASES, REPO, VERSION } from '../data/site';
+
+const builds = [
+  {
+    os: 'macos',
+    name: 'macOS',
+    file: 'Agentower.app.zip',
+    size: '~5.9 MB',
+    arch: 'arm64 · Apple Silicon',
+    requirement: 'macOS 13.0 o superior',
+    note: 'App de barra de menús firmada ad-hoc. Descomprimí, mové a /Applications y quitá la cuarentena de Gatekeeper.',
+    href: DOWNLOADS.macos
+  },
+  {
+    os: 'windows',
+    name: 'Windows',
+    file: 'Agentower.exe',
+    size: '~150 MB',
+    arch: 'win-x64',
+    requirement: 'Windows 10/11 x64',
+    note: 'App de bandeja self-contained: no requiere .NET instalado. Se auto-instala y registra el arranque con Windows.',
+    href: DOWNLOADS.windows
+  }
+];
+---
+
+<section id="descarga" class="relative py-20 sm:py-28">
+  <div class="container-page">
+    <SectionHeading
+      eyebrow="Descarga"
+      title="Bajá Agentower"
+      description={`Binarios del último release (${VERSION}). Es gratis y open source bajo licencia MIT.`}
+    />
+
+    <div class="mt-6 flex justify-center">
+      <span id="os-hint" class="hidden items-center gap-2 rounded-full border border-brand-500/30 bg-brand-500/10 px-3.5 py-1.5 text-xs font-medium text-brand-400">
+        <Icon name="check" size={13} />
+        Detectamos <span id="os-name" class="font-semibold"></span> en tu equipo
+      </span>
+    </div>
+
+    <div class="mx-auto mt-8 grid max-w-4xl gap-5 sm:grid-cols-2">
+      {builds.map((build) => (
+        <article data-os-card={build.os} class="card card-hover flex flex-col p-7">
+          <div class="flex items-center justify-between">
+            <span class="grid h-12 w-12 place-items-center rounded-2xl border border-ink-700/80 bg-ink-800 text-ink-100">
+              {build.os === 'macos' ? (
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M16.4 12.7c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.7.8-3.4.8-.7 0-1.8-.8-3-.8-1.5 0-2.9.9-3.7 2.3-1.6 2.7-.4 6.7 1.1 8.9.8 1.1 1.7 2.3 2.9 2.2 1.2 0 1.6-.7 3-.7s1.8.7 3 .7c1.2 0 2-1.1 2.8-2.2.9-1.2 1.2-2.4 1.2-2.5 0 0-2.4-.9-2.5-3.4ZM14.2 5.6c.6-.8 1.1-1.9 1-3-.9 0-2.1.6-2.8 1.4-.6.7-1.2 1.9-1 3 1 .1 2.1-.5 2.8-1.4Z" />
+                </svg>
+              ) : (
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M3 5.5l7.5-1v7H3v-6ZM11.6 4.3 21 3v8.5h-9.4V4.3ZM3 12.5h7.5v7L3 18.5v-6ZM11.6 12.5H21V21l-9.4-1.3v-7.2Z" />
+                </svg>
+              )}
+            </span>
+            <span class="rounded-md border border-ink-700/80 bg-ink-850 px-2 py-1 font-mono text-[0.68rem] text-ink-400">{build.size}</span>
+          </div>
+
+          <h3 class="mt-5 text-xl font-bold">{build.name}</h3>
+          <p class="mt-1.5 font-mono text-[0.78rem] text-brand-400">{build.file}</p>
+
+          <ul class="mt-4 space-y-1.5 text-[0.82rem] text-ink-300">
+            <li class="flex items-center gap-2"><Icon name="check" size={13} class="text-ink-500" />{build.arch}</li>
+            <li class="flex items-center gap-2"><Icon name="check" size={13} class="text-ink-500" />{build.requirement}</li>
+          </ul>
+
+          <p class="mt-4 flex-1 text-sm leading-relaxed text-ink-400">{build.note}</p>
+
+          <a href={build.href} download class="btn btn-primary mt-6 w-full">
+            <Icon name="download" size={18} />
+            Descargar para {build.name}
+          </a>
+        </article>
+      ))}
+    </div>
+
+    <div class="mx-auto mt-8 flex max-w-4xl flex-col items-center gap-3 text-center sm:flex-row sm:justify-between sm:text-left">
+      <p class="text-sm text-ink-400">
+        ¿Preferís compilarlo vos? El binario Go también corre en Linux.
+      </p>
+      <div class="flex flex-wrap justify-center gap-2">
+        <a href="#instalacion" class="btn btn-ghost px-3.5 py-2 text-xs">Ver guía del binario</a>
+        <a href={ALL_RELEASES} target="_blank" rel="noopener noreferrer" class="btn btn-ghost px-3.5 py-2 text-xs">
+          Todos los releases
+          <Icon name="arrow" size={14} />
+        </a>
+      </div>
+    </div>
+
+    <p class="mx-auto mt-6 max-w-4xl text-center text-xs leading-relaxed text-ink-500">
+      Los binarios los publica GitHub en cada release de
+      <a href={REPO} target="_blank" rel="noopener noreferrer" class="text-ink-400 underline decoration-dotted underline-offset-4 hover:text-white">gregoryoviedo/agentower</a>.
+      Verificá siempre la URL del release antes de ejecutar un archivo descargado.
+    </p>
+  </div>
+</section>
+
+<script>
+  const hint = document.getElementById('os-hint');
+  const nameEl = document.getElementById('os-name');
+  const card = document.querySelector<HTMLElement>('[data-os-card]');
+
+  const ua = navigator.userAgent;
+  const detected = /Mac/i.test(ua) ? 'macos' : /Win/i.test(ua) ? 'windows' : null;
+
+  if (detected) {
+    const label = detected === 'macos' ? 'macOS' : 'Windows';
+    if (nameEl) nameEl.textContent = label;
+    hint?.classList.remove('hidden');
+    hint?.classList.add('inline-flex');
+    document.querySelectorAll<HTMLElement>('[data-os-card]').forEach((el) => {
+      if (el.dataset.osCard === detected) {
+        el.style.borderColor = 'color-mix(in oklab, var(--color-brand-500) 45%, transparent)';
+        const tag = document.createElement('span');
+        tag.className = 'absolute right-5 top-5 rounded-md border border-brand-500/30 bg-brand-500/10 px-2 py-0.5 font-mono text-[0.62rem] uppercase tracking-wider text-brand-400';
+        tag.textContent = 'recomendado';
+        el.appendChild(tag);
+      }
+    });
+  }
+</script>

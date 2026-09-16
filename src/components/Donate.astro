@@ -1,0 +1,81 @@
+---
+import Icon from './Icon.astro';
+import { BINANCE_PAY_ID, REPO, ISSUES } from '../data/site';
+
+const perks = [
+  { icon: 'heart', text: 'Mantenimiento y nuevos agentes' },
+  { icon: 'app', text: 'Mejoras en las apps nativas' },
+  { icon: 'terminal', text: 'Más tests y documentación' }
+];
+---
+
+<section id="donar" class="relative py-20 sm:py-28">
+  <div class="container-page">
+    <div class="relative overflow-hidden rounded-[2rem] border border-ink-700/70 bg-ink-900 p-8 sm:p-12">
+      <div class="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#f0b90b]/10 blur-3xl" aria-hidden="true"></div>
+      <div class="pointer-events-none absolute -bottom-32 -left-20 h-72 w-72 rounded-full bg-accent-500/10 blur-3xl" aria-hidden="true"></div>
+
+      <div class="relative grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+        <div>
+          <span class="eyebrow">
+            <Icon name="heart" size={14} />
+            Apoyá el proyecto
+          </span>
+          <h2 class="mt-4 text-3xl font-bold leading-tight sm:text-4xl">Agentower es gratis y open source</h2>
+          <p class="mt-4 max-w-xl text-base leading-relaxed text-ink-300">
+            No hay planes, licencias ni telemetría. Si la herramienta te sirve, una donación por Binance Pay ayuda a dedicarle tiempo al proyecto.
+          </p>
+
+          <ul class="mt-6 grid gap-2.5">
+            {perks.map((perk) => (
+              <li class="flex items-center gap-2.5 text-sm text-ink-300">
+                <Icon name={perk.icon} size={15} class="text-[#f0b90b]" />
+                {perk.text}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="rounded-3xl border border-[#f0b90b]/25 bg-ink-850 p-6 sm:p-7">
+          <div class="flex items-center gap-3">
+            <span class="grid h-11 w-11 place-items-center rounded-xl bg-[#f0b90b] font-bold text-ink-950">B</span>
+            <div>
+              <p class="text-sm font-semibold">Binance Pay</p>
+              <p class="text-xs text-ink-400">Envialo desde tu app de Binance</p>
+            </div>
+          </div>
+
+          <div class="mt-5">
+            <p class="text-xs font-medium uppercase tracking-wider text-ink-500">ID de Binance Pay</p>
+            <div class="mt-2 flex items-center gap-2 rounded-xl border border-ink-700/80 bg-[#06080c] p-2 pl-4">
+              <code class="flex-1 font-mono text-lg font-semibold tracking-wide text-white">{BINANCE_PAY_ID}</code>
+              <button
+                type="button"
+                data-copy-text={BINANCE_PAY_ID}
+                class="btn btn-ghost px-3 py-2 text-xs"
+                aria-label="Copiar ID de Binance Pay"
+              >
+                <Icon name="copy" size={15} />
+                <span data-copy-label>Copiar</span>
+              </button>
+            </div>
+          </div>
+
+          <p class="mt-5 text-xs leading-relaxed text-ink-400">
+            ¿No podés donar? Una estrella en GitHub, un issue con feedback o un aporte de código también suman muchísimo.
+          </p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a href={REPO} target="_blank" rel="noopener noreferrer" class="btn btn-ghost px-3 py-2 text-xs">
+              <Icon name="github" size={14} />
+              Dar una estrella
+            </a>
+            <a href={ISSUES} target="_blank" rel="noopener noreferrer" class="btn btn-ghost px-3 py-2 text-xs">
+              <Icon name="message" size={14} />
+              Reportar un problema
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

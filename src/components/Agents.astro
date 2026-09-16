@@ -1,0 +1,43 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import { AGENTS } from '../data/site';
+
+const initials: Record<string, string> = {
+  'opencode': 'oc',
+  'Claude Code': 'cc',
+  'Kiro': 'ki',
+  'GitHub Copilot': 'cp',
+  'Codex': 'cx',
+  'Antigravity': 'ag'
+};
+---
+
+<section id="agentes" class="relative py-20 sm:py-28">
+  <div class="container-page">
+    <SectionHeading
+      eyebrow="Compatible con"
+      title="Un bot, todos tus agentes"
+      description="Agentower detecta los CLIs instalados en tu PATH (y en los bundles de app) y sigue sus sesiones sin que tengas que elegir nada. Podés cambiar de agente por chat cuando quieras."
+    />
+
+    <ul class="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {AGENTS.map((agent) => (
+        <li class="card card-hover p-6">
+          <div class="flex items-center gap-3">
+            <span class="grid h-10 w-10 place-items-center rounded-xl border border-ink-700/80 bg-ink-800 font-mono text-sm font-semibold text-brand-400">
+              {initials[agent.name]}
+            </span>
+            <div>
+              <h3 class="text-[0.98rem] font-semibold">{agent.name}</h3>
+              <span class="font-mono text-[0.68rem] uppercase tracking-wider text-ink-500">{agent.transport}</span>
+            </div>
+          </div>
+          <p class="mt-4 text-sm leading-relaxed text-ink-300">{agent.note}</p>
+          <code class="mt-4 block truncate rounded-lg border border-ink-700/70 bg-[#06080c] px-3 py-2 font-mono text-[0.75rem] text-ink-400">
+            $ {agent.cli}
+          </code>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

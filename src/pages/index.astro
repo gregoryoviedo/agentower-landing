@@ -1,17 +1,32 @@
 ---
-import '../styles/global.css';
+import Layout from '../components/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import Agents from '../components/Agents.astro';
+import Features from '../components/Features.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import Requirements from '../components/Requirements.astro';
+import Install from '../components/Install.astro';
+import Commands from '../components/Commands.astro';
+import Security from '../components/Security.astro';
+import Download from '../components/Download.astro';
+import Donate from '../components/Donate.astro';
+import Footer from '../components/Footer.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout>
+  <Nav />
+  <main>
+    <Hero />
+    <Agents />
+    <Features />
+    <HowItWorks />
+    <Requirements />
+    <Install />
+    <Commands />
+    <Security />
+    <Download />
+    <Donate />
+  </main>
+  <Footer />
+</Layout>

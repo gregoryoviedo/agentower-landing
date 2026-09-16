@@ -1,0 +1,99 @@
+---
+import '../styles/global.css';
+import { REPO, VERSION, BASE } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Agentower — Controlá tus agentes de IA desde Telegram',
+  description = 'Control remoto desde Telegram para opencode, Claude Code, Kiro, GitHub Copilot, Codex y Antigravity. Un binario Go único y apps nativas opcionales para macOS y Windows.'
+} = Astro.props;
+
+const base = BASE;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://gregoryoviedo.github.io').href;
+const ogImage = new URL(`${base}app-icon.jpeg`, Astro.site ?? 'https://gregoryoviedo.github.io').href;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#08090c" />
+
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+    <link rel="icon" href={`${base}favicon.ico`} sizes="any" />
+    <link rel="apple-touch-icon" href={`${base}app-icon.jpeg`} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content="Agentower" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    />
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'SoftwareApplication',
+      name: 'Agentower',
+      applicationCategory: 'DeveloperApplication',
+      operatingSystem: 'macOS 13.0+, Windows 10/11 x64, Linux',
+      softwareVersion: VERSION,
+      description,
+      url: canonical,
+      downloadUrl: `${REPO}/releases/latest`,
+      license: 'https://opensource.org/licenses/MIT',
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }
+    })} />
+  </head>
+  <body class="min-h-screen overflow-x-hidden">
+    <slot />
+
+    <script>
+      document.addEventListener('click', async (event) => {
+        const button = (event.target as HTMLElement)?.closest<HTMLButtonElement>('[data-copy], [data-copy-text]');
+        if (!button) return;
+
+        const pre = button.closest('.code-block')?.querySelector('pre');
+        const text = button.dataset.copyText ?? pre?.textContent ?? '';
+        if (!text) return;
+
+        const label = button.querySelector('[data-copy-label]');
+
+        try {
+          await navigator.clipboard.writeText(text);
+          if (label) {
+            label.textContent = 'Copiado';
+            setTimeout(() => (label.textContent = 'Copiar'), 1600);
+          }
+        } catch {
+          if (label) {
+            label.textContent = 'Error';
+            setTimeout(() => (label.textContent = 'Copiar'), 1600);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
