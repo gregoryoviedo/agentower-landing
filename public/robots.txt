@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gregoryoviedo.github.io/agentower-landing/sitemap-index.xml

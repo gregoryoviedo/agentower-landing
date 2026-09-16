@@ -1,0 +1,52 @@
+# Agentower
+
+> Agentower controla, desde Telegram, una o varias instancias locales de agentes de IA: opencode, Claude Code, Kiro, GitHub Copilot, Codex y Antigravity. Se compone de un binario Go único (`remote-bot`) y apps nativas opcionales para macOS (barra de menús) y Windows (área de notificación).
+
+## Qué es
+
+Agentower te permite ejecutar, monitorear y guiar sesiones de tus agentes de IA desde el teléfono mientras tu máquina hace el trabajo real. El bot se comunica con Telegram por long polling saliente: no abre puertos, no usa túneles ni webhooks. Solo responde al `ALLOWED_CHAT_ID` configurado y guarda el estado en SQLite local. Es open source y self-hosted (single-user), sin backend ni cuentas.
+
+## Agentes soportados
+
+- opencode — HTTP (`opencode serve`) + SQLite (`opencode.db`); sigue la TUI local sin servidor.
+- Claude Code — `claude --print --output-format stream-json`; historial JSONL de todos los proyectos en `~/.claude`.
+- Kiro — ACP (`kiro-cli acp`); sesiones JSONL en `~/.kiro`.
+- GitHub Copilot — ACP (CLI) / LSP (bundle de VS Code); `session-store.db`.
+- Codex — headless (`codex exec --json`); rollouts en `~/.codex`.
+- Antigravity — headless (`agy -p --output-format stream-json`); transcripts en `~/.gemini`.
+
+## Cómo funciona
+
+1. El bot detecta los CLIs instalados en el PATH y en los bundles de app.
+2. Un observador auto-sigue la sesión más reciente de cada agente y detecta cuándo termina una tarea o hace una pregunta.
+3. Si no hubo actividad local, a los 2 minutos te avisa de la tarea completada y al minuto reenvía la pregunta del agente con botones.
+4. Respondés desde Telegram y la respuesta vuelve al agente que corre en tu máquina.
+
+## Requisitos
+
+- macOS 13.0+, Windows 10/11 x64 o Linux para el binario.
+- Go 1.22+ (solo si compilás `remote-bot`; los releases ya traen el binario embebido).
+- Un token de bot de Telegram (`@BotFather`) y tu chat ID (`@userinfobot`).
+- Al menos uno de: opencode, claude, kiro, copilot, codex, agy.
+
+## Instalación
+
+- macOS: descargar `Agentower-MacOS.zip`, mover `Agentower.app` a `/Applications` y quitar la cuarentena con `xattr -dr com.apple.quarantine`.
+- Windows: descargar `Agentower-Windows.zip`, descomprimir y ejecutar `Agentower.exe` (self-contained, sin .NET).
+- Avanzado: `go build -o remote-bot ./cmd/remote-bot` y `ENV_FILE=/ruta/.env ./remote-bot`.
+
+## Seguridad
+
+- Solo responde al `ALLOWED_CHAT_ID`; el resto se descarta en silencio.
+- Navegación por carpetas contenida dentro de `WORKSPACE_ROOT` (evalúa symlinks y `..`).
+- El `.env` se escribe con permisos `0600`; SQLite nunca guarda el contenido de los prompts.
+- Sin puertos abiertos: los wrappers hablan con el bot por un socket local en `127.0.0.1`.
+
+## Enlaces
+
+- Sitio: https://gregoryoviedo.github.io/agentower-landing/
+- Repositorio: https://github.com/gregoryoviedo/agentower
+- Releases: https://github.com/gregoryoviedo/agentower/releases/latest
+- Modelo de seguridad: https://github.com/gregoryoviedo/agentower/blob/main/SECURITY.md
+- Documento de diseño: https://github.com/gregoryoviedo/agentower/blob/main/docs/DESIGN.md
+- Licencia: MIT

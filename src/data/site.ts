@@ -10,8 +10,8 @@ export const SECURITY = `${REPO}/blob/main/SECURITY.md`;
 export const DESIGN_DOC = `${REPO}/blob/main/docs/DESIGN.md`;
 
 export const DOWNLOADS = {
-  macos: `${REPO}/releases/latest/download/Agentower.app.zip`,
-  windows: `${REPO}/releases/latest/download/Agentower.exe`
+  macos: `${REPO}/releases/latest/download/Agentower-MacOS.zip`,
+  windows: `${REPO}/releases/latest/download/Agentower-Windows.zip`
 } as const;
 
 export const BINANCE_PAY_ID = '371811579';
@@ -26,8 +26,8 @@ export interface Agent {
 }
 
 export const AGENTS: Agent[] = [
-  { name: 'opencode', transport: 'HTTP', cli: 'opencode serve', note: 'API REST de sesiones y question tool', logo: 'opencode.svg' },
-  { name: 'Claude Code', transport: 'stdio JSON', cli: 'claude', note: 'Historial JSONL en ~/.claude', logo: 'claude.svg' },
+  { name: 'opencode', transport: 'HTTP + SQLite', cli: 'opencode serve', note: 'Sigue la TUI local por SQLite; HTTP solo para enviar prompts', logo: 'opencode.svg' },
+  { name: 'Claude Code', transport: 'stdio JSON', cli: 'claude', note: 'Historial JSONL de todos los proyectos en ~/.claude', logo: 'claude.svg' },
   { name: 'Kiro', transport: 'ACP', cli: 'kiro-cli acp', note: 'Sesiones JSONL en ~/.kiro', logo: 'kiro.svg' },
   { name: 'GitHub Copilot', transport: 'ACP / LSP', cli: 'copilot', note: 'session-store de VS Code', logo: 'copilot.svg' },
   { name: 'Codex', transport: 'headless JSON', cli: 'codex exec --json', note: 'Rollouts en ~/.codex', logo: 'codex.svg' },
@@ -46,6 +46,46 @@ export const COMMANDS: Command[] = [
   { cmd: '/resume', desc: 'Detecta la sesión viva en tu máquina y ofrece seguirla desde Telegram.' },
   { cmd: '/agent · /agents', desc: 'Cambia el agente activo del chat sobre la marcha.' },
   { cmd: 'texto libre', desc: 'Responde a la sesión activa, o a la pregunta pendiente del agente.' }
+];
+
+export interface Faq {
+  q: string;
+  a: string;
+}
+
+export const FAQS: Faq[] = [
+  {
+    q: '¿Agentower es gratis?',
+    a: 'Sí. Es open source bajo licencia MIT y no tiene backend ni cuentas: descargás o compilás el binario y lo corrés en tu propia máquina.'
+  },
+  {
+    q: '¿Qué agentes de IA soporta?',
+    a: 'opencode, Claude Code, Kiro, GitHub Copilot, Codex y Antigravity. Detecta los que tengas instalados y te permite cambiar de agente por chat sin reiniciar nada.'
+  },
+  {
+    q: '¿Necesito abrir puertos o configurar un servidor?',
+    a: 'No. El bot usa long polling saliente contra la API de Telegram: no expone puertos ni necesita túneles ni webhooks. Las apps nativas hablan con el bot por un socket local en 127.0.0.1.'
+  },
+  {
+    q: '¿Dónde se guardan mi token y mis datos?',
+    a: 'Todo queda en tu máquina: el token en un archivo .env con permisos 0600 y el estado en SQLite. Nunca se guarda el contenido de tus prompts ni se manda a un servidor de terceros.'
+  },
+  {
+    q: '¿Puedo usarlo sin la app nativa?',
+    a: 'Sí. El binario Go (remote-bot) funciona solo en macOS, Linux y Windows. La app es opcional y aporta toggle, settings y auto-arranque.'
+  },
+  {
+    q: '¿Cómo sabe qué sesión seguir?',
+    a: 'Cada agente con locator tiene un observador que auto-sigue la sesión más reciente. Para opencode lee la TUI local por SQLite y para Claude escanea todos los proyectos: no tenés que elegir nada.'
+  },
+  {
+    q: '¿Funciona en Windows y macOS?',
+    a: 'Sí. Hay apps nativas para macOS (barra de menús) y Windows (área de notificación), y el binario Go también corre en Linux.'
+  },
+  {
+    q: '¿Cuánto tarda en avisarme?',
+    a: 'Si te alejás de la máquina, a los 2 minutos te avisa de una tarea completada y al minuto una pregunta pendiente del agente, con botones para continuar desde Telegram.'
+  }
 ];
 
 export interface Feature {

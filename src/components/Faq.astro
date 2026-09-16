@@ -1,0 +1,29 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import { FAQS } from '../data/site';
+---
+
+<section id="faq" class="relative py-20 sm:py-28">
+  <div class="container-page">
+    <SectionHeading
+      title="Preguntas frecuentes"
+      description="Lo esencial para decidir si Agentower encaja con tu flujo de trabajo: qué soporta, cómo protege tus datos y qué necesitás para empezar."
+    />
+
+    <div class="mx-auto mt-12 max-w-3xl border-y border-ink-700/60">
+      {FAQS.map((item) => (
+        <details class="group border-b border-ink-700/60 last:border-b-0">
+          <summary class="flex cursor-pointer list-none items-center gap-4 py-5 [&::-webkit-details-marker]:hidden">
+            <h3 class="flex-1 text-[0.98rem] font-semibold">{item.q}</h3>
+            <span class="shrink-0 text-ink-400 transition-transform duration-200 group-open:rotate-45">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true">
+                <path d="M12 5v14M5 12h14" />
+              </svg>
+            </span>
+          </summary>
+          <p class="-mt-1 pb-5 pr-9 text-sm leading-relaxed text-ink-300">{item.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

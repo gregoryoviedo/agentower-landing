@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { REPO, VERSION, BASE } from '../data/site';
+import { REPO, VERSION, BASE, FAQS } from '../data/site';
 
 interface Props {
   title?: string;
@@ -13,8 +13,69 @@ const {
 } = Astro.props;
 
 const base = BASE;
-const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://gregoryoviedo.github.io').href;
-const ogImage = new URL(`${base}app-icon.jpeg`, Astro.site ?? 'https://gregoryoviedo.github.io').href;
+const origin = Astro.site ?? new URL('https://gregoryoviedo.github.io');
+const canonical = new URL(Astro.url.pathname, origin).href;
+const ogImage = new URL(`${base}og-image.png`, origin).href;
+const icon512 = new URL(`${base}icon-512.png`, origin).href;
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${origin.href}#organization`,
+      name: 'Agentower',
+      url: origin.href,
+      logo: icon512,
+      sameAs: [REPO]
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${origin.href}#website`,
+      url: canonical,
+      name: 'Agentower',
+      inLanguage: 'es',
+      publisher: { '@id': `${origin.href}#organization` }
+    },
+    {
+      '@type': 'SoftwareApplication',
+      '@id': `${origin.href}#software`,
+      name: 'Agentower',
+      applicationCategory: 'DeveloperApplication',
+      applicationSubCategory: 'Remote control for local AI coding agents',
+      operatingSystem: 'macOS 13.0+, Windows 10/11 x64, Linux',
+      softwareVersion: VERSION,
+      description,
+      url: canonical,
+      downloadUrl: `${REPO}/releases/latest`,
+      codeRepository: REPO,
+      license: 'https://opensource.org/licenses/MIT',
+      programmingLanguage: 'Go',
+      inLanguage: 'es',
+      screenshot: ogImage,
+      softwareRequirements: 'Go 1.22+ (solo para compilar el binario) y al menos uno de opencode, claude, kiro, copilot, codex o agy instalado.',
+      featureList: [
+        'Multi-agente: opencode, Claude Code, Kiro, GitHub Copilot, Codex y Antigravity',
+        'Long polling a Telegram sin puertos expuestos ni webhooks',
+        'Whitelist estricta por chat ID',
+        'Navegación acotada al WORKSPACE_ROOT',
+        'Estado persistente en SQLite',
+        'Avisos de tarea completada y preguntas respondibles desde Telegram',
+        'Apps nativas opcionales para macOS y Windows'
+      ],
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': `${canonical}#faq`,
+      mainEntity: FAQS.map((item) => ({
+        '@type': 'Question',
+        name: item.q,
+        acceptedAnswer: { '@type': 'Answer', text: item.a }
+      }))
+    }
+  ]
+};
 ---
 
 <!doctype html>
@@ -27,11 +88,21 @@ const ogImage = new URL(`${base}app-icon.jpeg`, Astro.site ?? 'https://gregoryov
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="author" content="gregoryoviedo" />
     <meta name="theme-color" content="#08090c" />
 
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
     <link rel="icon" href={`${base}favicon.ico`} sizes="any" />
-    <link rel="apple-touch-icon" href={`${base}app-icon.jpeg`} />
+    <link rel="icon" type="image/png" sizes="192x192" href={`${base}icon-192.png`} />
+    <link rel="apple-touch-icon" href={`${base}apple-touch-icon.png`} />
+    <link rel="manifest" href={`${base}site.webmanifest`} />
+
+    <meta name="application-name" content="Agentower" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Agentower" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="format-detection" content="telephone=no" />
 
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="es_ES" />
@@ -39,12 +110,18 @@ const ogImage = new URL(`${base}app-icon.jpeg`, Astro.site ?? 'https://gregoryov
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:secure_url" content={ogImage} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Agentower — Controlá tus agentes de IA desde Telegram" />
     <meta property="og:site_name" content="Agentower" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content="Agentower — Controlá tus agentes de IA desde Telegram" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -53,19 +130,7 @@ const ogImage = new URL(`${base}app-icon.jpeg`, Astro.site ?? 'https://gregoryov
       href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Sora:wght@600..800&family=JetBrains+Mono:wght@400;500;600&display=swap"
     />
 
-    <script type="application/ld+json" set:html={JSON.stringify({
-      '@context': 'https://schema.org',
-      '@type': 'SoftwareApplication',
-      name: 'Agentower',
-      applicationCategory: 'DeveloperApplication',
-      operatingSystem: 'macOS 13.0+, Windows 10/11 x64',
-      softwareVersion: VERSION,
-      description,
-      url: canonical,
-      downloadUrl: `${REPO}/releases/latest`,
-      license: 'https://opensource.org/licenses/MIT',
-      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }
-    })} />
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   </head>
   <body class="min-h-screen overflow-x-hidden">
     <slot />
@@ -94,6 +159,63 @@ const ogImage = new URL(`${base}app-icon.jpeg`, Astro.site ?? 'https://gregoryov
           }
         }
       });
+
+      const detectOS = (): 'macos' | 'windows' | null => {
+        const platform = (
+          (navigator as Navigator & { userAgentData?: { platform?: string } }).userAgentData?.platform ||
+          navigator.platform ||
+          ''
+        ).toLowerCase();
+        const ua = navigator.userAgent.toLowerCase();
+
+        if (/iphone|ipad|ipod/.test(platform) || /iphone|ipad|ipod/.test(ua)) return null;
+        if (platform.startsWith('mac') || /macintosh|mac os x/.test(ua)) return 'macos';
+        if (platform.startsWith('win') || /windows/.test(ua)) return 'windows';
+        return null;
+      };
+
+      const os = detectOS();
+
+      if (os) {
+        const label = os === 'macos' ? 'macOS' : 'Windows';
+
+        document.querySelectorAll<HTMLAnchorElement>('[data-os-download]').forEach((el) => {
+          const href = os === 'macos' ? el.dataset.macos : el.dataset.windows;
+          if (!href) return;
+          el.href = href;
+          el.setAttribute('download', '');
+          el.setAttribute('aria-label', `Descargar Agentower para ${label}`);
+          el.setAttribute('title', `Descargar Agentower para ${label}`);
+        });
+
+        document.querySelectorAll<HTMLElement>('[data-os-download-label]').forEach((el) => {
+          el.textContent = `Descargar para ${label}`;
+        });
+
+        const nameEl = document.getElementById('os-name');
+        if (nameEl) nameEl.textContent = label;
+        const hint = document.getElementById('os-hint');
+        hint?.classList.remove('hidden');
+        hint?.classList.add('inline-flex');
+
+        document.querySelectorAll<HTMLElement>('[data-os-card]').forEach((el) => {
+          if (el.dataset.osCard !== os) return;
+          el.style.borderColor = 'color-mix(in oklab, var(--color-brand-500) 45%, transparent)';
+          const tag = document.createElement('span');
+          tag.className =
+            'absolute right-5 top-5 rounded-md border border-brand-500/30 bg-brand-500/10 px-2 py-0.5 font-mono text-[0.72rem] uppercase tracking-wider text-brand-400';
+          tag.textContent = 'recomendado';
+          el.appendChild(tag);
+        });
+
+        document.querySelectorAll<HTMLElement>('[data-hero-os]').forEach((el) => {
+          const current = el.dataset.heroOs === os;
+          el.classList.toggle('btn-primary', current);
+          el.classList.toggle('btn-ghost', !current);
+          el.querySelector<HTMLElement>('[data-hero-os-badge]')?.classList.toggle('hidden', !current);
+          if (current) el.setAttribute('aria-current', 'true');
+        });
+      }
     </script>
   </body>
 </html>

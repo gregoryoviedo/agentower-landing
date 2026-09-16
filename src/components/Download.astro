@@ -7,7 +7,7 @@ const builds = [
   {
     os: 'macos',
     name: 'macOS',
-    file: 'Agentower.app.zip',
+    file: 'Agentower-MacOS.zip',
     size: '~5.9 MB',
     arch: 'arm64 · Apple Silicon',
     requirement: 'macOS 13.0 o superior',
@@ -17,11 +17,11 @@ const builds = [
   {
     os: 'windows',
     name: 'Windows',
-    file: 'Agentower.exe',
-    size: '~150 MB',
+    file: 'Agentower-Windows.zip',
+    size: '~66 MB',
     arch: 'win-x64',
     requirement: 'Windows 10/11 x64',
-    note: 'App de bandeja self-contained: no requiere .NET instalado. Se auto-instala y registra el arranque con Windows.',
+    note: 'App de bandeja self-contained: no requiere .NET instalado. Descomprimí el .zip y ejecutá Agentower.exe; se auto-instala y registra el arranque con Windows.',
     href: DOWNLOADS.windows
   }
 ];
@@ -97,28 +97,3 @@ const builds = [
     </p>
   </div>
 </section>
-
-<script>
-  const hint = document.getElementById('os-hint');
-  const nameEl = document.getElementById('os-name');
-  const card = document.querySelector<HTMLElement>('[data-os-card]');
-
-  const ua = navigator.userAgent;
-  const detected = /Mac/i.test(ua) ? 'macos' : /Win/i.test(ua) ? 'windows' : null;
-
-  if (detected) {
-    const label = detected === 'macos' ? 'macOS' : 'Windows';
-    if (nameEl) nameEl.textContent = label;
-    hint?.classList.remove('hidden');
-    hint?.classList.add('inline-flex');
-    document.querySelectorAll<HTMLElement>('[data-os-card]').forEach((el) => {
-      if (el.dataset.osCard === detected) {
-        el.style.borderColor = 'color-mix(in oklab, var(--color-brand-500) 45%, transparent)';
-        const tag = document.createElement('span');
-        tag.className = 'absolute right-5 top-5 rounded-md border border-brand-500/30 bg-brand-500/10 px-2 py-0.5 font-mono text-[0.72rem] uppercase tracking-wider text-brand-400';
-        tag.textContent = 'recomendado';
-        el.appendChild(tag);
-      }
-    });
-  }
-</script>
