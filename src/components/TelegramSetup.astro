@@ -1,0 +1,134 @@
+---
+import Icon from './Icon.astro';
+import SectionHeading from './SectionHeading.astro';
+import { BASE } from '../data/site';
+
+const base = BASE;
+---
+
+<section id="telegram" class="relative py-20 sm:py-28">
+  <div class="container-page">
+    <SectionHeading
+      title="Creá tu bot de Telegram"
+      description="Todo arranca con dos conversaciones en Telegram: una para conseguir el token del bot y otra para saber tu chat ID. Son gratuitas y no necesitás nada más."
+    />
+
+    <div class="mx-auto mt-14 max-w-3xl">
+      <ol>
+        <li class="border-t border-ink-700/60 py-8">
+          <div class="grid gap-6 sm:grid-cols-[1.1fr_auto] sm:items-start">
+            <div>
+              <div class="flex items-center gap-3">
+                <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-ink-800 font-mono text-xs font-semibold text-brand-400">01</span>
+                <h3 class="text-[0.98rem] font-semibold">Hablá con @BotFather</h3>
+              </div>
+              <p class="mt-3 text-sm leading-relaxed text-ink-300">
+                Es el bot oficial de Telegram para crear bots. Buscalo en la app y verificá el check azul junto al nombre:
+                hay cuentas falsas con nombres parecidos.
+              </p>
+              <p class="mt-3 text-sm leading-relaxed text-ink-300">
+                Enviá <code class="rounded bg-ink-800 px-1.5 py-0.5 font-mono text-[0.8rem] text-brand-400">/newbot</code>,
+                elegí un nombre y un username (tiene que terminar en <span class="font-mono">bot</span>). Al final te devuelve un{' '}
+                <strong class="font-semibold text-ink-100">token</strong>: esa es la credencial que Agentower usa para hablar con Telegram.
+              </p>
+            </div>
+
+            <figure class="sm:w-[264px]">
+              <img
+                src={`${base}telegram/botfather.png`}
+                alt="Resultado de búsqueda de Telegram que muestra a @BotFather con la insignia de verificado y más de 8 millones de usuarios."
+                width="252"
+                height="53"
+                loading="lazy"
+                decoding="async"
+                class="h-[56px] w-auto rounded-lg border border-ink-700/70"
+              />
+              <figcaption class="mt-2 text-xs leading-relaxed text-ink-500">
+                En la búsqueda debe aparecer <span class="font-mono text-ink-400">BotFather</span> con la insignia de verificado.
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="mt-5 space-y-2 font-mono text-[0.8rem] leading-relaxed">
+            <p><span class="select-none text-ink-500">Vos ›</span> <span class="text-ink-100">/newbot</span></p>
+            <p class="text-ink-300"><span class="select-none text-ink-500">BotFather ›</span> Alright, a new bot. How are we going to call it?</p>
+            <p><span class="select-none text-ink-500">Vos ›</span> <span class="text-ink-100">Agentower Bot</span></p>
+            <p class="text-ink-300"><span class="select-none text-ink-500">BotFather ›</span> Good. Now let's choose a username for your bot.</p>
+            <p><span class="select-none text-ink-500">Vos ›</span> <span class="text-ink-100">agentower_bot</span></p>
+            <p class="text-ink-300"><span class="select-none text-ink-500">BotFather ›</span> Done! Use this token to access the HTTP API:</p>
+            <p><span class="select-none text-ink-500">&nbsp;</span> <span class="text-brand-400">1234567890:AA…</span> <span class="text-ink-500">← tu token, guardalo</span></p>
+          </div>
+        </li>
+
+        <li class="border-t border-ink-700/60 py-8">
+          <div class="grid gap-6 sm:grid-cols-[1.1fr_auto] sm:items-start">
+            <div>
+              <div class="flex items-center gap-3">
+                <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-ink-800 font-mono text-xs font-semibold text-brand-400">02</span>
+                <h3 class="text-[0.98rem] font-semibold">Sacá tu chat ID con @userinfobot</h3>
+              </div>
+              <p class="mt-3 text-sm leading-relaxed text-ink-300">
+                Agentower es de un solo usuario: solo el chat ID que configures puede hablarle al bot. Para obtenerlo, abrí{' '}
+                <span class="font-mono text-ink-200">@userinfobot</span> (aparece como{' '}
+                <span class="text-ink-200">“User Info · Get ID · idbot”</span>), enviá <span class="font-mono">/start</span> y
+                te responde con tu ID numérico.
+              </p>
+              <p class="mt-3 text-sm leading-relaxed text-ink-300">
+                Ese número es tu <span class="font-mono text-ink-200">ALLOWED_CHAT_ID</span>. Cualquier otro chat queda descartado en silencio.
+              </p>
+            </div>
+
+            <figure class="sm:w-[264px]">
+              <img
+                src={`${base}telegram/userinfobot.png`}
+                alt="Resultado de búsqueda de Telegram que muestra a User Info · Get ID · idbot con más de 588 mil usuarios."
+                width="296"
+                height="63"
+                loading="lazy"
+                decoding="async"
+                class="h-[56px] w-auto rounded-lg border border-ink-700/70"
+              />
+              <figcaption class="mt-2 text-xs leading-relaxed text-ink-500">
+                Se llama <span class="text-ink-400">User Info · Get ID · idbot</span>; enviale <span class="font-mono">/start</span>.
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="mt-5 space-y-2 font-mono text-[0.8rem] leading-relaxed">
+            <p><span class="select-none text-ink-500">Vos ›</span> <span class="text-ink-100">/start</span></p>
+            <p class="text-ink-300"><span class="select-none text-ink-500">idbot ›</span> Your user ID: <span class="text-brand-400">123456789</span></p>
+            <p><span class="select-none text-ink-500">&nbsp;</span> <span class="text-ink-500">← ese número es tu ALLOWED_CHAT_ID</span></p>
+          </div>
+        </li>
+
+        <li class="border-t border-ink-700/60 py-8">
+          <div class="flex gap-4">
+            <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-ink-800 font-mono text-xs font-semibold text-brand-400">03</span>
+            <div class="min-w-0 flex-1">
+              <h3 class="text-[0.98rem] font-semibold">Guardá el token y el chat ID</h3>
+              <p class="mt-1.5 text-sm leading-relaxed text-ink-300">
+                Con las dos credenciales listas, seguí la guía de instalación: la app las escribe en un{' '}
+                <span class="font-mono">.env</span> local con permisos <span class="font-mono">0600</span> y nunca las manda a un servidor de terceros.
+              </p>
+              <a href="#instalacion" class="btn btn-ghost mt-4">
+                <Icon name="download" size={17} />
+                Ir a la instalación
+              </a>
+            </div>
+          </div>
+        </li>
+      </ol>
+
+      <div class="mt-2 flex gap-3 rounded-2xl bg-ink-850/50 p-5">
+        <span class="mt-0.5 shrink-0 text-brand-400">
+          <Icon name="lock" size={17} />
+        </span>
+        <p class="text-sm leading-relaxed text-ink-300">
+          <strong class="font-semibold text-ink-100">Tratá el token como una contraseña.</strong>{' '}
+          Quien lo tenga controla el bot. No lo subas a un repo público ni lo compartas; si se filtra, revocalo con{' '}
+          <span class="font-mono text-ink-200">/revoke</span> en @BotFather y generá uno nuevo.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
