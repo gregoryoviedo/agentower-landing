@@ -2,7 +2,7 @@
 import Icon from './Icon.astro';
 import SectionHeading from './SectionHeading.astro';
 
-const requirements = [
+const essentials = [
   {
     title: 'Un agente de IA instalado',
     body: 'Al menos uno de los CLIs soportados, disponible en el PATH: opencode, claude, kiro, copilot, codex o agy.'
@@ -14,18 +14,21 @@ const requirements = [
   {
     title: 'Tu chat ID',
     body: 'El ID numérico de tu usuario de Telegram, que te da @userinfobot. Es lo único que puede hablar con tu bot.'
-  },
+  }
+];
+
+const optional = [
   {
     title: 'macOS 13.0+ o Windows 10/11 x64',
-    body: 'Para las apps nativas. El binario Go también corre en Linux y en cualquier macOS/Windows reciente.'
+    body: 'Para las apps nativas con interfaz. El binario Go también corre en Linux y en versiones recientes de macOS y Windows.'
   },
   {
-    title: 'Go 1.22+ (solo si compilás)',
-    body: 'Necesario únicamente si construís el binario remote-bot desde el código. Bajando un release ya viene embebido.'
+    title: 'Go 1.22+',
+    body: 'Solo si compilás remote-bot desde el código. Bajando un release, el binario ya viene embebido.'
   },
   {
-    title: '.NET 8 SDK (solo wrapper Windows)',
-    body: 'Solo se requiere para compilar Agentower.exe por tu cuenta. El .exe publicado es self-contained y no pide .NET.'
+    title: '.NET 8 SDK',
+    body: 'Solo para compilar Agentower.exe por tu cuenta. El .exe publicado es self-contained y no pide .NET.'
   }
 ];
 
@@ -45,7 +48,7 @@ const vars = [
     />
 
     <div class="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {requirements.map((item) => (
+      {essentials.map((item) => (
         <div class="card flex gap-3.5 p-5">
           <span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-brand-500/15 text-brand-400">
             <Icon name="check" size={14} />
@@ -57,6 +60,39 @@ const vars = [
         </div>
       ))}
     </div>
+
+    <details class="card group mt-4 overflow-hidden">
+      <summary class="flex cursor-pointer list-none items-center gap-3 p-5 [&::-webkit-details-marker]:hidden">
+        <span class="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-ink-700/60 text-ink-300">
+          <Icon name="spark" size={14} />
+        </span>
+        <span class="flex-1">
+          <span class="block text-[0.94rem] font-semibold">Requisitos opcionales</span>
+          <span class="mt-0.5 block text-sm text-ink-400">
+            Solo hacen falta si compilás vos mismo o querés la app nativa con interfaz.
+          </span>
+        </span>
+        <span class="shrink-0 text-ink-400 transition-transform group-open:rotate-180">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </span>
+      </summary>
+
+      <ul class="grid gap-4 border-t border-ink-700/60 p-5 sm:grid-cols-3">
+        {optional.map((item) => (
+          <li class="rounded-2xl border border-ink-700/60 bg-ink-850/60 p-4">
+            <div class="flex items-center gap-2">
+              <h3 class="text-[0.9rem] font-semibold">{item.title}</h3>
+              <span class="rounded-md border border-ink-600/70 bg-ink-800 px-1.5 py-0.5 font-mono text-[0.6rem] uppercase tracking-wider text-ink-400">
+                opcional
+              </span>
+            </div>
+            <p class="mt-2 text-sm leading-relaxed text-ink-300">{item.body}</p>
+          </li>
+        ))}
+      </ul>
+    </details>
 
     <div class="card mt-10 overflow-hidden">
       <div class="border-b border-ink-700/70 px-6 py-4">

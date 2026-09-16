@@ -22,15 +22,16 @@ export interface Agent {
   transport: string;
   cli: string;
   note: string;
+  logo: string;
 }
 
 export const AGENTS: Agent[] = [
-  { name: 'opencode', transport: 'HTTP', cli: 'opencode serve', note: 'API REST de sesiones y question tool' },
-  { name: 'Claude Code', transport: 'stdio JSON', cli: 'claude', note: 'Historial JSONL en ~/.claude' },
-  { name: 'Kiro', transport: 'ACP', cli: 'kiro-cli acp', note: 'Sesiones JSONL en ~/.kiro' },
-  { name: 'GitHub Copilot', transport: 'ACP / LSP', cli: 'copilot', note: 'session-store de VS Code' },
-  { name: 'Codex', transport: 'headless JSON', cli: 'codex exec --json', note: 'Rollouts en ~/.codex' },
-  { name: 'Antigravity', transport: 'stream-json', cli: 'agy -p', note: 'Transcripts en ~/.gemini' }
+  { name: 'opencode', transport: 'HTTP', cli: 'opencode serve', note: 'API REST de sesiones y question tool', logo: 'opencode.svg' },
+  { name: 'Claude Code', transport: 'stdio JSON', cli: 'claude', note: 'Historial JSONL en ~/.claude', logo: 'claude.svg' },
+  { name: 'Kiro', transport: 'ACP', cli: 'kiro-cli acp', note: 'Sesiones JSONL en ~/.kiro', logo: 'kiro.svg' },
+  { name: 'GitHub Copilot', transport: 'ACP / LSP', cli: 'copilot', note: 'session-store de VS Code', logo: 'copilot.svg' },
+  { name: 'Codex', transport: 'headless JSON', cli: 'codex exec --json', note: 'Rollouts en ~/.codex', logo: 'codex.svg' },
+  { name: 'Antigravity', transport: 'stream-json', cli: 'agy -p', note: 'Transcripts en ~/.gemini', logo: 'antigravity.svg' }
 ];
 
 export interface Command {

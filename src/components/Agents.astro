@@ -1,15 +1,8 @@
 ---
 import SectionHeading from './SectionHeading.astro';
-import { AGENTS } from '../data/site';
+import { AGENTS, BASE } from '../data/site';
 
-const initials: Record<string, string> = {
-  'opencode': 'oc',
-  'Claude Code': 'cc',
-  'Kiro': 'ki',
-  'GitHub Copilot': 'cp',
-  'Codex': 'cx',
-  'Antigravity': 'ag'
-};
+const base = BASE;
 ---
 
 <section id="agentes" class="relative py-20 sm:py-28">
@@ -23,9 +16,17 @@ const initials: Record<string, string> = {
     <ul class="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {AGENTS.map((agent) => (
         <li class="card card-hover p-6">
-          <div class="flex items-center gap-3">
-            <span class="grid h-10 w-10 place-items-center rounded-xl border border-ink-700/80 bg-ink-800 font-mono text-sm font-semibold text-brand-400">
-              {initials[agent.name]}
+          <div class="flex items-center gap-3.5">
+            <span class="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-ink-700/80 bg-ink-800 p-2.5">
+              <img
+                src={`${base}agents/${agent.logo}`}
+                alt={`Logo de ${agent.name}`}
+                width="28"
+                height="28"
+                loading="lazy"
+                decoding="async"
+                class="h-full w-full object-contain"
+              />
             </span>
             <div>
               <h3 class="text-[0.98rem] font-semibold">{agent.name}</h3>
